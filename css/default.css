@@ -1,0 +1,11 @@
+.sb-nav-magnify-off {background-image: url(../images/magnify.png);}
+.sb-nav-magnify-on {background-image: url(../images/magnify_on.png);}
+.sb-nav-resize-off {background-image: url(../images/resize.png);}
+.sb-nav-resize-on {background-image: url(../images/resize_on.png);}
+.loupe {background-color: #555;background: rgba(0, 0, 0, 0.25);border: 5px solid rgba(0, 0, 0, 0);z-index: 10006;cursor: url(../images/image.gif), url(../images/blank.cur), none;-webkit-border-radius: 50px;-moz-border-radius: 50px;border-radius: 50px;}
+.expandableImage span {position: absolute;width: 1px;height: 1px;}
+.expandableImage span span {background: url(../images/magnify_icon.png) no-repeat top left;width: 35px;height: 35px;margin: 10px 0 0 10px;z-index: 5;display: none;}
+.expandableImage {z-index: 4;}
+.expandableImage:hover span span {display: block;}
+#exampleImage img, #exampleImage2 img {width: 15px;height: 15px;border: 0;cursor: pointer;margin: 0px;line-height:15px;}
+p {width: 300px;}

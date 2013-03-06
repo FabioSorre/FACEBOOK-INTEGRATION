@@ -1,0 +1,306 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+    <head>
+        <title>Project Pi</title>
+            <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+            <meta name="apple-mobile-web-app-capable" content="yes">
+            <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0;" />
+            <meta name="google-site-verification" content=""/>
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+            <meta name="author" content=""/>
+            <meta name="description" content=""/>
+            <meta name="keywords" content=""/>
+            <meta name="robots" content="index,follow" />
+            <link rel="shortcut icon" href="img/favicon.ico" /> 
+
+            <!-- Google Fonts -->
+            <link href='http://fonts.googleapis.com/css?family=Quantico:400,400italic,700,700italic' rel='stylesheet' type='text/css'>    
+            <link href='http://fonts.googleapis.com/css?family=Rancho' rel='stylesheet' type='text/css'>
+                
+            <link rel="stylesheet" type="text/css" href="css/intro.css" />
+            <link rel="stylesheet" href="plugins/shadowbox/shadowbox.css" type="text/css" />
+            <link rel="stylesheet" href="css/default.css" type="text/css" />
+                
+            <script type="text/javascript" src="plugins/jquery/jquery.js"></script>
+            <script type="text/javascript" src="plugins/shadowbox/shadowbox.js"></script>
+            <script type="text/javascript" src="plugins/loupe/jquery.loupe.js"></script>
+            <script type="text/javascript" src="scripts/default.js"></script>                
+            <link href="css/jquery-ui-1.8.16.custom.css" rel="stylesheet" type="text/css"/>
+
+            <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+            <script type="text/javascript" src="js/jquery-ui-1.8.16.custom.min.js"></script> 
+            <script type="text/javascript" src="js/script.js"></script>  
+            <script type='text/javascript'>//<![CDATA[ 
+                $(function(){
+                    jQuery(document).ready(function($) {
+                        $("#top_login").mouseleave(function() {
+                            $(this).animate({
+                                marginTop: '-60px'
+                            }, 800);
+                        }).mouseenter(function() {
+                            $(this).animate({
+                                marginTop: '-5px'
+                            }, 800);
+                        });
+                    });
+                    });//]]>  
+                    
+                    e = 0;
+                    function puntini(){
+                       if(e <= 6){
+                         e++;
+                         h = document.getElementById('caricamento_puntini');
+                         h.innerHTML += '. ';
+                         setTimeout('puntini()', 500);
+                       }
+
+                       if(e == 6){
+                         e = 0;
+                         h.innerHTML = '';
+                       }
+                    }
+		</script>
+                
+</head>
+<body onload="setTimeout('puntini()',1000);">
+            <noscript>
+                <div align="center"> <br><br>
+                    <h3><font color="red" face="Verdana,Arial,Helvetica,sans-serif">
+                    Per visualzzare correttamente il contenuto della 
+                    pagina occorre avere JavaScript abilitato.
+                    </font></h3><br><br>
+                </div>
+            </noscript>  
+            <div id="fb-root"></div>
+            <script type="text/javascript">
+                function enabling(num){document.getElementById("button"+num).disabled=false;} 
+                function utente(user_id,user_name){
+                    this.user_id=user_id;this.user_name=user_name;return this;}
+                function fotoalbum(album_id,album_name,album_count,album_privacy){
+                    this.album_id=album_id;this.album_name=album_name;this.album_count=album_count;this.album_privacy=album_privacy;return this;}
+                function singolafoto(foto_id, foto_thumb, foto_link, album_id){
+                    this.foto_id=foto_id;this.foto_thumb=foto_thumb;this.foto_link=foto_link;this.album_id=album_id;return this;}
+                function login(){
+                    FB.api('/me', function(response) {
+                        var query = FB.Data.query('select first_name, hometown_location, sex, pic_square from user where uid={0}', response.id);
+                        query.wait(function(rows) {
+                            document.getElementById('loginleft').style.display = "block";
+                            document.getElementById('loginleft').innerHTML = '<img align="middle" src="' + rows[0].pic_square + '" alt="" />&nbsp;&nbsp;<be>Hi <b>' + rows[0].first_name +"</b>!</be>";
+                            document.getElementById('loginright').style.left = "60%";
+                            document.getElementById('loginright').style.width = "39%";
+                            document.getElementById('loginright').style.textAlign = "left";
+                            document.getElementById('loginright').paddingLeft = "10%";
+                        });
+                    });}
+                function logout(){
+                    document.getElementById('login').style.display = "none";}
+                window.fbAsyncInit = function() {
+                    FB.init({appId: '476625285705436', status: true, cookie: true, xfbml: true});
+                    FB.Event.subscribe('auth.login', function(response) {
+                        login();enabling(1);
+                        $("#intro").fadeOut(3000);
+                        $("#upload").fadeIn(1500);
+                        });
+                    FB.Event.subscribe('auth.logout', function(response) {
+                        logout();self.location.href = "index.html";});
+                    FB.getLoginStatus(function(response) {
+                        if (response.status === 'connected') {
+                            enabling(1);
+                            $("#top_login").delay(5000).animate({ marginTop: '-60px'}, 800);
+                            $("#intro").fadeOut(3000);
+                            $("#upload").fadeIn(1500);
+                            var uid = response.authResponse.userID;var accessToken = response.authResponse.accessToken;} 
+                        else if (response.status === 'not_authorized') {
+                            enabling(1);
+                            $("#top_login").delay(5000).animate({ marginTop: '-60px'}, 800);
+                            $("#intro").fadeOut(3000);
+                            $("#upload").fadeIn(1500);
+                            } else {
+                            $("#top_login").css('marginTop', '-5px');
+                        }});
+                    };
+                    (function() {
+                        var e = document.createElement('script');e.type = 'text/javascript';e.src = document.location.protocol +
+                            '//connect.facebook.net/en_US/all.js';
+                        e.async = true;document.getElementById('fb-root').appendChild(e);}());
+                    var count=0;var album = new Array();var refresh = 0;var fotografie = new Array();var tmp_wall=0;
+                    function getAlbums(){
+                        count=0;
+                        tmp_wall=0;
+                        window.getAlbums = function() {
+                          FB.api('/me/albums?limit=30', function(resp) {
+                            var ul = document.getElementById('albums');
+                             ul.setAttribute("id", "listnone");
+                            for (var i=0, l=resp.data.length; i<l; i++) {
+                              var
+                                stampalbum = resp.data[i],
+                                li = document.createElement('li'),
+                                a = document.createElement('a');
+                                if(stampalbum.privacy == "friends")
+                                {
+                                    a.innerHTML = stampalbum.name + "&nbsp;&nbsp;<img src='img/friends.jpg'/>&nbsp;(" + stampalbum.count + ")";
+                                }
+                                else if(stampalbum.privacy == "friends-of-friends")
+                                {
+                                    a.innerHTML = stampalbum.name + "&nbsp;&nbsp;<img src='img/friends-of-friends.jpg'/>&nbsp;(" + stampalbum.count + ")";
+                                }
+                                else if(stampalbum.privacy == "everyone")
+                                {
+                                    a.innerHTML = stampalbum.name + "&nbsp;&nbsp;<img src='img/public.jpg'/>&nbsp;(" + stampalbum.count + ")";
+                                }
+                                else if(stampalbum.privacy == "custom")
+                                {
+                                    a.innerHTML = stampalbum.name + "&nbsp;&nbsp;<img src='img/custom.jpg'/>&nbsp;(" + stampalbum.count + ")";
+                                }
+                                else
+                                {
+                                    a.innerHTML = stampalbum.name + "&nbsp;&nbsp;<img src='img/onlyme.jpg'/>&nbsp;(" + stampalbum.count + ")";
+                                }
+                                
+                                if((stampalbum.name =="Timeline Photos") && (tmp_wall == 0))
+                                {
+                                    a.href = stampalbum.link;
+                                    a.setAttribute("target", "_blank");
+                                    a.setAttribute("class", "listalbum");
+                                    li.appendChild(a);
+                                    ul.appendChild(li);
+                                    album[count] = new fotoalbum(stampalbum.id, stampalbum.name, stampalbum.count, stampalbum.privacy);
+                                    count++;
+                                    tmp_wall++;
+                                }
+                                else if(stampalbum.name != "Timeline Photos")
+                                {
+                                    a.href = stampalbum.link;
+                                    a.setAttribute("target", "_blank");
+                                    a.setAttribute("class", "listalbum");
+                                    li.appendChild(a);
+                                    ul.appendChild(li);
+                                    album[count] = new fotoalbum(stampalbum.id, stampalbum.name, stampalbum.count, stampalbum.privacy);
+                                    count++;
+                                }
+                              }
+                          });
+                        };
+                        album.sort();
+
+                        if(refresh == 0)
+                        {
+                            refresh = refresh + 1;
+                            album.lenght=0;
+                            getAlbums();
+                        }
+                        enabling(2);
+                    }
+                    
+                    function readPhotos(){
+                        var count0=0;
+                        var count1=0;
+                        $('#progress1').anim_progressbar();
+
+                        for(var kk=0; kk<album.length;kk++)
+                        {   
+                            FB.api('/'+album[kk].album_id+'/photos?limit=50', function(pho) {
+                                            
+                                            var y = pho.data.length;
+                                            for (var j=0, k=pho.data.length; j<=k; j++) 
+                                            {
+                                                if(k>0)
+                                                {
+                                                    var photos = pho.data[j];
+                                                    var s = photos.link;
+                                                    var iof1 = s.indexOf("&set=a.");
+                                                    var sub= s.substring(60,73);
+                                                    fotografie[count1]= new singolafoto(photos.id, photos.picture, photos.source, sub);
+                                                    count1++;
+                                                    y = y-1;
+                                                    if(y == 0)
+                                                    {
+                                                        count0++;
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    count0++;
+                                                }
+                                                if(count0 == album.length)
+                                                {
+                                                    //Loading Done!
+                                                }
+                                            }
+                                        });
+                        }
+                    }
+                    
+                    function showImage() {
+                        var obj=document.getElementById("photos");
+                        obj.innerHTML="";
+                        fotografie.sort(function() {return 0.5 - Math.random()});
+
+                        for (var kk=0; kk<fotografie.length; kk++)
+                        {   
+                            var aa = document.createElement('be');
+                            aa.setAttribute("class", "table");
+                            for (var jj=0; jj<album.length; jj++)
+                            {
+                                if(album[jj].album_id == fotografie[kk].album_id)
+                                {
+                                    aa.innerHTML="<a href='"+fotografie [kk].foto_link+"' id='exampleImage' class='expandableImage' rel='shadowbox[test]' title='"+album[jj].album_name+"'><img class='single_pic' src='"+fotografie [kk].foto_thumb+"'></a>";
+                                }
+                            }
+                            obj.appendChild(aa);
+                        }
+                    
+                         var options = {
+                          resizeLgImages:     true,
+                          displayNav:         true,
+                          handleUnsupported:  'remove',
+                          keysClose:          ['c', 27],
+                          autoplayMovies:     true,
+                          onOpen:             shadow_box_open,
+                          onChange:           shadow_box_change,
+                          onFinish:           shadow_box_open,
+                          onClose:            shadow_box_close
+                         };
+                         Shadowbox.init(options);
+                    }
+                    
+                </script>
+<div id="wrapper">        
+    <div id="top_login">
+            <div id="login"><div id="loginleft" style ="display:none"></div><div id="loginright"><fb:login-button size="large"  autologoutlink="true" perms="user_likes, friends_likes,user_photos,friends_photos,user_birthday,friends_birthday,user_location,friends_location,email,status_update,publish_stream,user_about_me">Log In Facebook!</fb:login-button>
+            </div></div>
+    </div>
+    <div id="intro">
+            <img src="img/pi_big.png"/>
+            <div id="bal"><span id="caricamento_puntini"></span></div>
+    </div>
+    <div id="upload">
+            <div id="loading1" class="loading">
+                <p><input type="button" id="button1" value="Load your Albums!" disabled="true" onclick="javascript:getAlbums(); this.disabled=true;"/></p>
+                <ul id="albums"></ul>            
+            </div>
+            <div id="loading2" class="loading">
+                <p><input type="button" id="button2" value="Load your Pics!" disabled="true" onclick="javascript:readPhotos(); this.disabled=true;"/></p>
+                <div id="progress1">
+                    <div class="percent"></div>
+                    <div class="pbar"></div>
+                    <div class="elapsed"></div>
+                </div>
+                </div>
+            <div id="loading3" class="loading">
+                <p><input type="button" id="button3" value="Show Pics!" disabled="true" onclick="javascript:showImage(); this.disabled=true;"/></p>
+                <br><div id="photos"></div>  
+            </div>
+            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    </div>
+      
+
+    
+</div>
+
+
+                
+
+</body>
+</html>

@@ -1,0 +1,5 @@
+Go to shadowbox-js.com and download the latest zip or tar file. The
+download process will ask for options, make sure the images and
+external sites are ticked for examples to work. This code was built
+using the base version. Copy contents of the shadowbox directory
+into this directory.
